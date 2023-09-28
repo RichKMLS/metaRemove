@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# This script monitors a specified directory for file creation events. 
+# When a new file is detected, it removes all metadata from the file, 
+#     generates a new random filename, renames the file, and then 
+#     displays the new metadata.
+
+# Define the directory to be monitored
+dir_to_watch="$HOME/Downloads"
+
+generate_random_string() {
+    # Function to generate a random filename string:
+    #     Use /dev/urandom for random character generation
+    #     filter for alphanumeric characters
+    #     limit string length to 12-20 characters
+
+    length=$(( RANDOM % 9 + 12 ))
+    cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $length | head -n 1
+}
+
+# Monitor the specified directory for file creation events
+inotifywait -m "$dir_to_watch" -e create |
+    while read path action file; do
+   
+        # Ignore temporary files created by exiftool
+   	    if [[ "$file" == *"_exiftool_tmp" ]]; then
+   	        continue
+   	    fi
+   	
+        # Use exiftool to remove all metadata from the newly created file
+        exiftool -overwrite_original -all= "$dir_to_watch/${file}" ; wait
+        
+        # Retrieve the true file extension using exiftool and convert it to lowercase for uniformity
+        ext=$(exiftool -s3 -FileType "$dir_to_watch/${file}" | tr '[:upper:]' '[:lower:]') ; wait
+     
+        # Generate a random string for the new filename
+        new_filename="$(generate_random_string).$ext" ; wait
+        
+        # Rename the original file with the new filename
+        mv "$dir_to_watch/$file" "$dir_to_watch/$new_filename" ; wait
+        
+        # Verify and display the new metadata of the renamed file
+        exiftool "$dir_to_watch/$new_filename"
+        
+    done
