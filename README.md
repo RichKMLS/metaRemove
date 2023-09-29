@@ -8,7 +8,7 @@ This bash script monitors specified directories for file creation events. Upon t
 
 ## Features
 
-- Monitors a specified directory for file creation events in real-time.
+- Monitors specified directories for file creation events in real-time.
 - Removes all metadata from the newly created file.
 - Renames the original file with the new random filename of 12-20 characters.
 - Displays the new metadata of the renamed file.
