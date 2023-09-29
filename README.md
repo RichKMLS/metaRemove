@@ -1,5 +1,10 @@
 # metaRemove
-This bash script monitors a specified directory for file creation events. Upon the detection of a new file, it performs several operations to enhance the privacy and uniformity of file data.
+
+This bash script monitors specified directories for file creation events. Upon the detection of a new file, it performs several operations to enhance the privacy and uniformity of file data.
+
+<p align="center">
+<img src="https://github.com/RichKMLS/metaRemove/assets/105183376/c7f0f890-860b-4b01-8eca-2d53d07daafd" />
+</p>
 
 ## Features
 
