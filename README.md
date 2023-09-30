@@ -10,8 +10,8 @@ This bash script monitors specified directories for file creation events. Upon t
 
 - Monitors specified directories for file creation events in real-time.
 - Removes all metadata from the newly created file.
-- Renames the original file with the new random filename of 12-20 characters.
-- Displays the new metadata of the renamed file.
+- Renames the original file with a new random filename of 12-20 characters.
+- Prints the new metadata of the renamed file in the terminal for verification.
 
 ## Dependencies
 
